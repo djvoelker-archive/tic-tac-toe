@@ -1,2 +1,2 @@
 # tic-tac-toe
-Play Tic-Tac-Toe against a computer. Run tic-tac-toe shortcut to play game.
+Play Tic-Tac-Toe against a computer. Run main.py to play game.
