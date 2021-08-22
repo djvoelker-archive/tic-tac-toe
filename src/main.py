@@ -47,36 +47,39 @@ class game:
         
     def player_turn(self):
         player_sel = input("\n What box (from 1 - 9) would you like to draw an X in? ")
-        if player_sel.casefold() == "exit": self.exit = True
-        try:
-            if self.grid[int(player_sel)-1] == " ":
-                
-                #player turn
-                self.grid[int(player_sel)-1] = "X"
-                self.winner = self.check_for_winner('X')
-                if self.winner == 'X': 
-                    self.winner = " You win!"
-                    return
-                elif self.winner == " The game is a tie.":
-                    return
-                self.turns_played += 1
-                
-                #computer turn        
-                self.scan_board('O')
-                self.winner = self.check_for_winner('O')
-                if self.winner == 'O': 
-                    self.winner = " You lose!"
-                    return
-                elif self.winner == " The game is a tie.":
-                    return
-                self.turns_played += 1
-                
-                self.print_grid()
-                
-            else: print("\n That space is already filled in!\n")
-        
-        except (ValueError, IndexError):
-            print("\n Please type an integer from 1 - 9 or type 'exit' to exit game.")
+        if player_sel.casefold() == "exit":
+            self.exit = True
+            return
+        elif player_sel.casefold() != "exit":
+            try:
+                if self.grid[int(player_sel)-1] == " ":
+                    
+                    #player turn
+                    self.grid[int(player_sel)-1] = "X"
+                    self.winner = self.check_for_winner('X')
+                    if self.winner == 'X': 
+                        self.winner = " You win!"
+                        return
+                    elif self.winner == " The game is a tie.":
+                        return
+                    self.turns_played += 1
+                    
+                    #computer turn        
+                    self.scan_board('O')
+                    self.winner = self.check_for_winner('O')
+                    if self.winner == 'O': 
+                        self.winner = " You lose!"
+                        return
+                    elif self.winner == " The game is a tie.":
+                        return
+                    self.turns_played += 1
+                    
+                    self.print_grid()
+                    
+                else: print("\n That space is already filled in!\n")
+            
+            except (ValueError, IndexError):
+                print("\n Please type an integer from 1 - 9 or type 'exit' to exit game.")
         
         
     def scan_board(self, a):
