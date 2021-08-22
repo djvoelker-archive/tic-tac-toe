@@ -1,2 +1,2 @@
 # tic-tac-toe
- Play Tic-tac-toe against a computer.
+Play Tic-Tac-Toe against a computer. Run tic-tac-toe.exe to play game.
