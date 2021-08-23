@@ -24,18 +24,15 @@ class game:
         self.exit = False
         self.turns_played = 0
         while self.winner == False:
-            self.player_turn()
+            self.take_turns()
             if self.exit == True:
                 game.exit = True
                 return
-        self.print_grid()
-        print(self.winner)
-
+        print("\n" + self.winner)
 
     def setup_grid(self):
         self.grid = [" " for _ in range(9)]
-        
-        
+            
     def print_grid(self):
         print("\n")
         for r in range(3):    
@@ -43,8 +40,7 @@ class game:
             if r < 2: print("    -----------")
         print("\n\n------------------------------------------------------------")
         
-        
-    def player_turn(self):
+    def take_turns(self):
         player_sel = input("\n What box (from 1 - 9) would you like to draw an X in? ")
         if player_sel.casefold() == "exit":
             self.exit = True
@@ -52,41 +48,14 @@ class game:
         elif player_sel.casefold() != "exit":
             try:    
                 if self.grid[int(player_sel)-1] == " ":
-                    
                     #player turn
                     self.grid[int(player_sel)-1] = "X"
-                    #check if player won
-                    if self.turns_played > 3:
-                        self.scan_board('X', 'O', True)
-                        if self.winner == 'X': 
-                            self.winner = " You win!"
-                            return
-                        elif self.winner == " The game is a tie.":
-                            return
-                        
-                    self.turns_played += 1
-                    """put the above and below code into a function"""                    
-                    
-                    if " " not in self.grid:
-                        self.winner = " The game is a tie."
-                        return
-                    
+                    self.check_win_or_tie('X', 'O')
+                    if self.winner == " The game is a tie.": return
                     #computer turn
                     self.scan_board('O','O', False)
-                    #check if computer won
-                    if self.turns_played > 3:
-                        self.scan_board('O', 'X', True)
-                        if self.winner == 'O': 
-                            self.winner = " You lose!"
-                            return
-                        elif self.winner == " The game is a tie.":
-                            return
-                        
-                    self.turns_played += 1
-                    
-                    if " " not in self.grid:
-                        self.winner = " The game is a tie."
-                        return
+                    self.check_win_or_tie('O', 'X')
+                    if self.winner == " The game is a tie.": return                    
                     
                     self.print_grid()
                     
@@ -102,14 +71,11 @@ class game:
             for n in range([2,3,3][m]):
                 a = [self.grid[[2*n+2*(2-n)*x, 3*n+x, n+3*x][m]] for x in range(3) if self.grid[[2*n+2*(2-n)*x, 3*n+x, n+3*x][m]] == i]
                 g = [self.grid[[2*n+2*(2-n)*x, 3*n+x, n+3*x][m]] for x in range(3)]
-                #Debug stuff:
-                #print(f"{i, j}, Set(a): {set(a)}, a: {a}, m: {m}, n: {n}, check_win: {check_win}")
                 if (check_win == True):
                     if (i in g) and (len(set(a)) < (len(a)-1)) and (' ' not in g) and (j not in g):
                         self.winner = i
                         return
                 elif (check_win == False) and (i in g) and (' ' in g) and (len(set(a)) < len(a)):
-                    #can I use character replacement in a string and set a var = self.grid[[2*n+2*(2-n)*x, 3*n+x, n+3*x][m]] and then swap in either x or g.index(" ") to decrease the number of times I have to type that long list generator index sequence?
                     self.grid[[2*n+2*(2-n)*g.index(" "), 3*n+g.index(" "), n+3*g.index(" ")][m]] = j
                     return
                 
@@ -122,6 +88,21 @@ class game:
                     self.grid[squares[n]] = 'O'
                     return
                 del squares[n]
+    
+    def check_win_or_tie(self, i, j):
+        if self.turns_played > 3:
+            self.scan_board(i, j, True)
+            if self.winner == i: 
+                self.winner = " You lose!"
+                return
+            elif self.winner == " The game is a tie.":
+                return
+                        
+        self.turns_played += 1
+                    
+        if " " not in self.grid:
+            self.winner = " The game is a tie."
+            return
 
 
 def play_tic_tac_toe():
