@@ -2,12 +2,6 @@
 Created on Aug 21, 2021
 
 @author: djvoe
-
-Things to add:
-    - GUI
-    - Not have computer respond instantly
-    - Not print out different board for each move
-    - Choose who goes first and who plays as X and who plays as O
 '''
 
 from random import randint
