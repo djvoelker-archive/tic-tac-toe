@@ -93,7 +93,10 @@ class game:
         if self.turns_played > 3:
             self.scan_board(i, j, True)
             if self.winner == i: 
-                self.winner = " You lose!"
+                if i == 'O':
+                    self.winner = " You lose!"
+                else:
+                    self.winner = " You win!"
                 return
             elif self.winner == " The game is a tie.":
                 return
