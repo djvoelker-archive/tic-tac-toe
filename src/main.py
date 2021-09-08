@@ -45,7 +45,9 @@ class game:
                     #player turn
                     self.grid[int(player_sel)-1] = "X"
                     self.check_win_or_tie('X', 'O')
-                    if self.winner == " The game is a tie.": return
+                    if self.winner == " The game is a tie." or self.winner == " You win!":
+                        self.print_grid()
+                        return
                     #computer turn
                     self.scan_board('O','O', False)
                     self.check_win_or_tie('O', 'X')
